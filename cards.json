@@ -1,0 +1,114 @@
+{
+    "buyer": "darknova1",
+    "seller": "jakiro12",
+    "block_id": "0325a6da435e18b41730a7e6945254213db05f2d",
+    "block_num": 52799194,
+    "created_date": "2021-04-06",
+    "data": [
+        {
+            "num_cards": 1,
+            "currency": "USD",
+            "buy_price": "3.970",
+            "cards": [
+                {
+                    "uid": "C3-131-A4L3SV7QXS",
+                    "id": 131,
+                    "name": "Furious Chicken",
+                    "gold": false,
+                    "edition": 3
+                }
+            ]
+        }
+    ]
+},
+{
+    "created_date": "2021-04-06",
+    "num_cards": 1,
+    "currency": "USD",
+    "min_price": "1.560",
+    "max_price": "1.560",
+    "id": 145,
+    "name": "Contessa L'ament",
+    "gold": false,
+    "edition": 4
+}{
+    "created_date": "2021-04-06",
+    "num_cards": 1,
+    "currency": "USD",
+    "min_price": "3.250",
+    "max_price": "3.250",
+    "id": 144,
+    "name": "Dark Ha'on",
+    "gold": false,
+    "edition": 4
+}{
+    "created_date": "2021-04-06",
+    "num_cards": 1,
+    "currency": "USD",
+    "min_price": "0.479",
+    "max_price": "0.479",
+    "id": 224,
+    "name": "Drake of Arnak",
+    "gold": false,
+    "edition": 4
+}{
+    "created_date": "2021-04-06",
+    "num_cards": 1,
+    "currency": "USD",
+    "min_price": "0.384",
+    "max_price": "0.384",
+    "id": 48,
+    "name": "Spineback Wolf",
+    "gold": false,
+    "edition": 0
+}{
+    "created_date": "2021-04-06",
+    "num_cards": 1,
+    "currency": "USD",
+    "min_price": "0.439",
+    "max_price": "0.439",
+    "id": 120,
+    "name": "Goblin Chef",
+    "gold": false,
+    "edition": 2
+}{
+    "created_date": "2021-04-06",
+    "num_cards": 5,
+    "currency": "USD",
+    "min_price": "0.063",
+    "max_price": "0.063",
+    "id": 120,
+    "name": "Goblin Chef",
+    "gold": false,
+    "edition": 2
+}{
+    "created_date": "2021-04-06",
+    "num_cards": 3,
+    "currency": "USD",
+    "min_price": "0.149",
+    "max_price": "0.149",
+    "id": 282,
+    "name": "Dark Ferryman",
+    "gold": false,
+    "edition": 3
+}{
+    "created_date": "2021-04-06",
+    "num_cards": 9,
+    "currency": "USD",
+    "min_price": "0.169",
+    "max_price": "0.169",
+    "id": 282,
+    "name": "Dark Ferryman",
+    "gold": false,
+    "edition": 3
+}{
+    "created_date": "2021-04-06",
+    "num_cards": 1,
+    "currency": "USD",
+    "min_price": "0.520",
+    "max_price": "0.520",
+    "id": 189,
+    "name": "Wizard of Eastwood",
+    "gold": false,
+    "edition": 4
+}

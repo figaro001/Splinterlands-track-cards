@@ -1,4 +1,5 @@
 import requests
+import os, sys
 import json
 
 last_block_api = None
@@ -20,7 +21,7 @@ def getLastBlock():
 
 def getCard(card={}):
     """
-    return card in info
+    return card info
     """
 
     if card != {}:
@@ -38,14 +39,14 @@ def getCard(card={}):
 
     return {}
 
-def getDataTransaction(_data={}):
+def getDataTransaction(data_={}):
     """
-    return transaction datas
+    return transaction data
     """
-    datas_list = []
+    data_list = []
 
-    if _data != {}:
-        for i in _data["items"]:
+    if data_ != {}:
+        for i in data_["items"]:
             resp = requests.get(api["items_sells"]+str(i))
             resp = json.loads(resp.text)
             data_i = {
@@ -55,13 +56,14 @@ def getDataTransaction(_data={}):
                 "cards": [getCard(c) for c in resp["cards"]]
             } 
 
-            datas_list.append(data_i)
+            data_list.append(data_i)
 
-    return datas_list
+    return data_list
+
 
 def getMarketPurchaseTransactions(last_block=None):
     """
-    return all market purchase transaction made during the last_block_api and last_block
+    return all market purchases transaction made during the last_block_api and last_block
     """
 
     transactions_list = []
@@ -69,30 +71,28 @@ def getMarketPurchaseTransactions(last_block=None):
     if last_block is None:
         last_block = getLastBlock()
 
-    # print(f"last block: {last_block}")
     minB = last_block
-    # print(f"min block: {minB}")
 
     resp = requests.get(api["history_blocks"]+str(minB))
     resp = json.loads(resp.text)
 
     try:
         maxB = resp[len(resp)-1]["block_num"]
-        # print(f"max block: {maxB}")
     except:
         return []
 
+    # only market_purchase
     resp = [x for x in resp if x["type"] == "market_purchase"]
+    # only market purchase with seller and buyer different
     resp = [x for x in resp if x["player"] != x["affected_player"]]
-    # print(f"response: {resp}")
 
     for x in resp:
         transaction = {
             "buyer": x["player"],
             "seller": x["affected_player"],
-            "block_id": x["block_id"],
-            "block_num": x["block_num"],
-            "created_date": x["created_date"],
+            # "block_id": x["block_id"],
+            # "block_num": x["block_num"],
+            "created_date": (x["created_date"].split("T"))[0],
             "data": getDataTransaction(json.loads(x["data"]))
         }
 
@@ -103,11 +103,46 @@ def getMarketPurchaseTransactions(last_block=None):
 
     return transactions_list
 
+def getCardValue(cards_list):
+    cl = []
+    for c in cards_list:
+        created_date = c["created_date"]
+        num_cards =  len(c["data"])
+        currency = c["data"][0]["currency"]
+        min_price = min([i["buy_price"] for i in c["data"]])
+        max_price = max([i["buy_price"] for i in c["data"]])
+        card_id = c["data"][0]["cards"][0]["id"]
+        name = c["data"][0]["cards"][0]["name"]
+        gold = c["data"][0]["cards"][0]["gold"]
+        edition = c["data"][0]["cards"][0]["edition"]
+
+        cl.append({
+            "created_date": created_date,
+            "num_cards": num_cards,
+            "currency": currency,
+            "min_price": min_price,
+            "max_price": max_price,
+            "id": card_id,
+            "name": name,
+            "gold": gold,
+            "edition": edition,
+        })
+    
+    return cl
+
 if __name__ == "__main__":
-    last_block_api = getLastBlock()
-    last_block = last_block_api
+    if last_block_api == None:
+        last_block_api = getLastBlock()
+        last_block = last_block_api
     while True:
         last_block_api = getLastBlock()
         if last_block != last_block_api:
-            print(getMarketPurchaseTransactions(last_block))
-            last_block = last_block_api
+            list_sold_cards = getMarketPurchaseTransactions(last_block)
+            if list_sold_cards != []:
+                cards = getCardValue(list_sold_cards)
+
+                with open(f"{os.getcwd()}/cards.json", 'a') as f:
+                    for c in cards:
+                        f.write(json.dumps(c, indent=4))
+        
+        last_block = last_block_api
