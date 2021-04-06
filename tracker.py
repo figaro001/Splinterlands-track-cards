@@ -4,6 +4,7 @@ import json
 
 last_block_api = None
 last_block = None
+
 api = {
     "last_block":"https://api.splinterlands.io/settings",
     "history_blocks":"https://api.splinterlands.io/transactions/history?from_block=",
@@ -21,7 +22,7 @@ def getLastBlock():
 
 def getCard(card={}):
     """
-    return card info
+    return info card
     """
 
     if card != {}:
@@ -108,7 +109,6 @@ def getCardValue(cards_list):
     for c in cards_list:
         created_date = c["created_date"]
         num_cards =  len(c["data"])
-        currency = c["data"][0]["currency"]
         min_price = min([i["buy_price"] for i in c["data"]])
         max_price = max([i["buy_price"] for i in c["data"]])
         card_id = c["data"][0]["cards"][0]["id"]
@@ -119,7 +119,6 @@ def getCardValue(cards_list):
         cl.append({
             "created_date": created_date,
             "num_cards": num_cards,
-            "currency": currency,
             "min_price": min_price,
             "max_price": max_price,
             "id": card_id,
